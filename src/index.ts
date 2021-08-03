@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import morgan from 'morgan';
 
 import { authRoutes } from "./routes";
@@ -12,7 +13,7 @@ app.use(morgan('tiny'));
 
 app.use('/users', authRoutes);
 
-app.all('*', () => {
+app.all('*', async () => {
     throw new NotFoundError();
 })
 
