@@ -3,6 +3,7 @@ import morgan from 'morgan';
 
 import { authRoutes } from "./routes";
 import errorHandler from "./middlewares/errorHandler";
+import {NotFoundError} from "./errors";
 
 const app = express();
 
@@ -11,8 +12,11 @@ app.use(morgan('tiny'));
 
 app.use('/users', authRoutes);
 
-app.use(errorHandler);
+app.all('*', () => {
+    throw new NotFoundError();
+})
 
+app.use(errorHandler);
 app.listen(3000, () => {
     console.log('Auth server started on port: 3000');
 })
