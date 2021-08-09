@@ -9,7 +9,6 @@ const errorHandler = (
     _: NextFunction
 ) => {
     if (err instanceof CustomError) {
-        console.log('Inside Error Handler')
         return res.status(err.statusCode).json({
             errors: err.serializeErrors()
         })
