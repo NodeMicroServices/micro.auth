@@ -35,7 +35,18 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     lastName: {
         type: String,
     },
-}, { timestamps: true });
+}, {
+    timestamps: true,
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = doc._id;
+            delete ret._id;
+            delete ret.password;
+            delete ret.updatedAt;
+            delete ret.__v;
+        }
+    }
+});
 
 userSchema.pre('save', async function(done) {
     if (this.isModified('password')) {
@@ -50,11 +61,5 @@ userSchema.statics.build = (attr: IUserAttributes) => {
 }
 
 const User = mongoose.model<IUserDocument, IUserModel>('User', userSchema);
-
-const bivek = User.build({
-    email: "",
-    firstName: "",
-    password: ""
-});
 
 export default User;
