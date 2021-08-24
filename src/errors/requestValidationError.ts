@@ -4,8 +4,8 @@ import CustomError, { ICustomErrorResponse } from "./customError";
 
 export default class RequestValidationError extends CustomError {
     constructor(
-        public statusCode = 400,
-        private errors: ValidationError[]
+        private errors: ValidationError[],
+        public statusCode = 400
     ) {
         super('Validating request failed.');
         Object.setPrototypeOf(this, RequestValidationError.prototype);

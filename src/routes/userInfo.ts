@@ -1,11 +1,25 @@
 import express from "express";
-import {NotFoundError} from "../errors";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
 router.get('/me', (req, res) => {
-    throw new NotFoundError();
-    res.send('Hello Stranger!');
+    if (!req.session?.jwt) {
+        return res.send({
+            currentUser: null
+        });
+    }
+
+    try {
+        const payload = jwt.verify(req.session.jwt, process.env.JWT_KEY!);
+        return res.send({
+            currentUser: payload
+        })
+    } catch (e) {
+        return res.send({
+            currentUser: null
+        });
+    }
 });
 
 export { router as userInfoRouter };

@@ -4,9 +4,9 @@ import CustomError from "../errors/customError";
 
 const errorHandler = (
     err: Error,
-    req: Request,
+    _: Request,
     res: Response,
-    _: NextFunction
+    __: NextFunction
 ) => {
     if (err instanceof CustomError) {
         return res.status(err.statusCode).json({
@@ -14,7 +14,7 @@ const errorHandler = (
         })
     }
 
-    res.status(500).json({
+    return res.status(500).json({
         errors: [{
             message: 'Oops! Something went wrong.'
         }]

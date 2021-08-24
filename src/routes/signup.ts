@@ -1,13 +1,14 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import jwt from 'jsonwebtoken';
 
 import User from "../models/user";
-import BadRequestError from "../errors/badRequestError";
+import {BadRequestError} from "../errors";
+import validateRequest from "../middlewares/validateRequest";
 
 const router = express.Router();
 
-const dataVerificationMiddleware = [
+const requestValidationRules = [
     body('email')
         .isEmail()
         .withMessage('Email must be valid.'),
@@ -21,13 +22,8 @@ const dataVerificationMiddleware = [
         .withMessage('First name must be between 2 and 20 characters')
 ];
 
-router.post('/sign-up', dataVerificationMiddleware, async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).send(errors.array());
-    }
+router.post('/sign-up', requestValidationRules, validateRequest, async (req: Request, res: Response) => {
     const { email, password, firstName, lastName } = req.body;
-
     const isCurrentUser = await User.findOne({ email });
 
     if (isCurrentUser) {
