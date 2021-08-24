@@ -11,7 +11,7 @@ export default class RequestValidationError extends CustomError {
         Object.setPrototypeOf(this, RequestValidationError.prototype);
     }
 
-    serializeErrors = () => {
+    serializeErrors = (): ICustomErrorResponse[] => {
         return this.errors.map(err => {
             return {
                 message: err.msg,
