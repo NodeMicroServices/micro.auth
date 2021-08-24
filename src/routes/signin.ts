@@ -22,7 +22,6 @@ router.post('/sign-in', requestValidationRules, validateRequest, async (req: Req
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
-
     if (!existingUser) {
         throw new BadRequestError('Invalid credentials.');
     }
@@ -38,7 +37,6 @@ router.post('/sign-in', requestValidationRules, validateRequest, async (req: Req
     }, process.env.JWT_KEY!);
 
     req.session = { jwt: userJWT };
-
     res.status(200).send({ data: existingUser });
 });
 
