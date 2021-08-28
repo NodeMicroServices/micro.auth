@@ -18,7 +18,7 @@ app.use(morgan('tiny'));
 // Add secure: true => to enable sharing cookie only through HTTPS
 app.use(cookieSession({
     signed: false,
-    secure: true
+    secure: process.env.NODE_ENV !== 'test'
 }));
 
 app.use('/users', authRoutes);

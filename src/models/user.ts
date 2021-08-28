@@ -3,7 +3,7 @@ import { IMongooseDefaultProperties } from "../interface/mongooseDocument";
 import Password from "../services/password";
 
 // Interface that describes props needed to create a new User
-interface IUserAttributes {
+export interface IUserAttributes {
     email: string;
     password: string;
     firstName: string;
