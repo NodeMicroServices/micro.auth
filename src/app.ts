@@ -3,10 +3,10 @@ import 'express-async-errors';
 import morgan from 'morgan';
 import cookieSession from "cookie-session";
 import cors from 'cors';
+import { errorHandler } from "@beevk/express-common";
+import { NotFoundError } from "@beevk/express-common";
 
 import { authRoutes } from "./routes";
-import errorHandler from "./middlewares/errorHandler";
-import { NotFoundError } from "./errors";
 
 const app = express();
 
@@ -23,11 +23,9 @@ app.use(cookieSession({
 }));
 
 //Change this later
-app.use(cors({
-    origin: 'http://local.host'
-}));
+app.use(cors());
 
-app.use('/users', authRoutes);
+app.use('/api/users', authRoutes);
 
 app.all('*', async () => {
     throw new NotFoundError();
