@@ -18,7 +18,7 @@ const requestValidationRules = [
         .withMessage('Password is required.')
 ];
 
-router.post('/sign-in', requestValidationRules, validateRequest, async (req: Request, res: Response) => {
+router.post('/sign-in', validateRequest(requestValidationRules), async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });

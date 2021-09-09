@@ -22,7 +22,7 @@ const requestValidationRules = [
         .withMessage('First name must be between 2 and 20 characters')
 ];
 
-router.post('/sign-up', requestValidationRules, validateRequest, async (req: Request, res: Response) => {
+router.post('/sign-up', validateRequest(requestValidationRules), async (req: Request, res: Response) => {
     const { email, password, firstName, lastName } = req.body;
     const isCurrentUser = await User.findOne({ email });
 
