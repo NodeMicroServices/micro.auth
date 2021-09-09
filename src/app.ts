@@ -3,8 +3,7 @@ import 'express-async-errors';
 import morgan from 'morgan';
 import cookieSession from "cookie-session";
 import cors from 'cors';
-import { errorHandler } from "@beevk/express-common";
-import { NotFoundError } from "@beevk/express-common";
+import { errorHandler, NotFoundError } from "@beevk/express-common";
 
 import { authRoutes } from "./routes";
 
